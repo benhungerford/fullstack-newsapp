@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      articles: [],
+    }
+  }
+
+  componentDidMount() {
+    fetch('api/v1/')
+      .then(response => response.json())
+      .then(data => this.setState({ articles: data }))
+      .catch(error => console.log('Error:', error));
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <nav className="navbar navbar-light bg-light">
+          <button className="navbar-brand btn btn-light">
+            <i className="fas fa-newspaper"></i>
+          </button>
+          <div className="categories">
+            <button type="button" className="btn btn-light">Entertainment</button>
+            <button type="button" className="btn btn-light">Travel</button>
+            <button type="button" className="btn btn-light">Food</button>
+          </div>
+        </nav>
+        <ArticleList articles={this.state.articles}/>
+      </div>
+    );
+  }
 }
 
 export default App;
