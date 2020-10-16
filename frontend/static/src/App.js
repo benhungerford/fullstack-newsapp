@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import ArticleList from './components/ArticleList';
+import AddArticle from './components/AddArticle';
 
 class App extends Component {
   constructor(props) {
@@ -26,11 +28,13 @@ class App extends Component {
           </button>
           <div className="categories">
             <button type="button" className="btn btn-light">Entertainment</button>
-            <button type="button" className="btn btn-light">Travel</button>
-            <button type="button" className="btn btn-light">Food</button>
+            <button type="button" className="btn btn-light ml-2">Travel</button>
+            <button type="button" className="btn btn-light ml-2">Food</button>
+            <button type="button" className="btn btn-info ml-2">Add Article</button>
           </div>
         </nav>
         <ArticleList articles={this.state.articles}/>
+        <AddArticle />
       </div>
     );
   }

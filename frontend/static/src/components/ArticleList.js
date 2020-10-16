@@ -1,32 +1,40 @@
 import React from 'react';
 
-function Article(props) {
-  return()
-}
 
-
-function ArticleList(props) {
-  const articles = 
+function LastWeek(props) {
   return(
-    <div className="row mt-3 no-gutters justify-content-space-between">
-      <div className="card col-8">
-        <h5 className="card-header">Top Stories</h5>
-        <div className="card-body">
-          <h5 className="card-title">Special title treatment</h5>
-          <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <button className="btn btn-primary">Read More</button>
-        </div>
-      </div>
-      <div className="card col-4">
-        <h5 className="card-header">This Week</h5>
-        <button type="button" className="list-group-item list-group-item-action">
-          Cras justo odio
-        </button>
-        <button type="button" className="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
-        <button type="button" className="list-group-item list-group-item-action">Morbi leo risus</button>
-        <button type="button" className="list-group-item list-group-item-action">Porta ac consectetur ac</button>
-        <button type="button" className="list-group-item list-group-item-action">Vestibulum at eros</button>
-      </div>
-    </div>)
+    <button type="button" className="list-group-item list-group-item-action font-weight-bold">{props.article.title}</button>
   )
 }
+
+function TopStories(props) {
+  return(
+      <button className="list-group-item list-group-item-action">
+        <h5 className="card-title font-weight-bold">{props.article.title}</h5>
+        <div id="topstory" className="card-body">
+          <p >{props.article.body}</p>
+        </div>
+      </button>
+  )
+}
+
+function ArticleList(props) {
+  const topStories = props.articles.filter(article => article.top_story).map(article => <TopStories key={article.id} article={article} />);
+  const lastWeek = props.articles.filter(article => !article.top_story).map(article => <LastWeek key={article.id} article={article} />);
+  return(
+    <div className="row mt-3 no-gutters justify-content-space-between">
+      <div className="col-8">
+        <h3 className="card-header">Top Stories</h3>
+        <div className="list-group">
+        {topStories}
+        </div>
+      </div>
+      <div className="col-4">
+        <h3 className="card-header">This Week</h3>
+        {lastWeek}
+      </div>
+    </div>
+  );
+}
+
+export default ArticleList;
