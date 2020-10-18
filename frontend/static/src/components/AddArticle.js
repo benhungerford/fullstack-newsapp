@@ -25,7 +25,7 @@ class AddArticle extends Component {
 
   render() {
     return(
-      <form onSubmit={(event) => this.props.handleSubmit(event, this.state)}>
+      <form className="mt-3 mr-5 ml-5" onSubmit={(event) => this.props.handleSubmit(event, this.state)}>
         <div className="form-group">
           <label htmlFor="title" className="font-weight-bold">Article Title</label>
           <input className="form-control mb-3" type="text" id="title" placeholder="Article Title" name="title" onChange={this.handleInput}/>

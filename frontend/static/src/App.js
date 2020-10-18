@@ -6,6 +6,7 @@ import EntertainmentList from './components/EntertainmentList';
 import TravelList from './components/TravelList';
 import FoodList from './components/FoodList';
 import AddArticle from './components/AddArticle';
+import Publish from './components/Publish';
 
 class App extends Component {
   constructor(props) {
@@ -14,15 +15,15 @@ class App extends Component {
     this.state = {
       articles: [],
       button: 'home',
-
-
     }
     this.renderHome = this.renderHome.bind(this);
     this.renderEntertainment = this.renderEntertainment.bind(this);
     this.renderTravel = this.renderTravel.bind(this);
     this.renderFood = this.renderFood.bind(this);
     this.renderAddArticle = this.renderAddArticle.bind(this);
+    this.renderPublish = this.renderPublish.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.readMore = this.readMore.bind(this);
   }
 
   componentDidMount() {
@@ -71,25 +72,34 @@ class App extends Component {
     this.setState({ button: 'addArticle' });
   }
 
+  renderPublish() {
+    this.setState({ button: 'publish' });
+  }
+
+  readMore() {
+    this.setState({ button: 'readMore' });
+  }
 
   render() {
     const button = this.state.button;
     let page;
 
     if (button === 'home') {
-      page = <ArticleList articles={this.state.articles} />
-    } else if (button === 'entertainment'){
+      page = <ArticleList readMore={this.readMore} articles={this.state.articles.filter(article => article.status === 'Published')} />
+    } else if (button === 'entertainment') {
       page = <EntertainmentList articles={this.state.articles.filter(article => article.category === 'Entertainment')} />
-    } else if (button === 'travel'){
+    } else if (button === 'travel') {
       page = <TravelList articles={this.state.articles.filter(article => article.category === 'Travel')} />
-    } else if (button === 'food'){
+    } else if (button === 'food') {
       page = <FoodList articles={this.state.articles.filter(article => article.category === 'Food')} />
     } else if (button === 'addArticle') {
       page = <AddArticle handleSubmit={this.handleSubmit} />
+    } else if (button === 'publish') {
+      page = <Publish articles={this.state.articles.filter(article => article.status !== 'Published')} />
     }
 
     return (
-      <div className="container">
+      <div className="container-fluid">
         <nav className="navbar navbar-light bg-light">
           <button className="navbar-brand btn btn-light" onClick={this.renderHome}>
             <i className="fas fa-newspaper"></i>
@@ -99,6 +109,7 @@ class App extends Component {
             <button type="button" className="btn btn-light ml-2" onClick={this.renderTravel}>Travel</button>
             <button type="button" className="btn btn-light ml-2" onClick={this.renderFood}>Food</button>
             <button type="button" className="btn btn-info ml-2" onClick={this.renderAddArticle}>Add Article</button>
+            <button type="button" className="btn btn-info ml-2" onClick={this.renderPublish}>Publish</button>
           </div>
         </nav>
         {page}
