@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 function PublishArticle(props) {
   return(
@@ -12,9 +12,19 @@ function PublishArticle(props) {
 
 }
 
-function Publish(props) {
-    const drafts = props.articles.filter(article => article.status === 'Draft').map(article => <PublishArticle key={article.id} article={article} />)
-    const submitted = props.articles.filter(article => article.status === 'Submitted').map(article => <PublishArticle key={article.id} article={article} />)
+class Publish extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      button: 'default',
+    }
+  }
+
+  render() {
+    const drafts = this.props.articles.filter(article => article.status === 'Draft').map(article => <PublishArticle key={article.id} article={article} />)
+    const submitted = this.props.articles.filter(article => article.status === 'Submitted').map(article => <PublishArticle key={article.id} article={article} />)
+
 
     return(
       <div className="row mt-3 mr-5 ml-5 no-gutters d-flex justify-content-around">
@@ -33,6 +43,8 @@ function Publish(props) {
       </div>
     );
   }
+  }
+
 
 
 export default Publish;

@@ -7,6 +7,7 @@ import TravelList from './components/TravelList';
 import FoodList from './components/FoodList';
 import AddArticle from './components/AddArticle';
 import Publish from './components/Publish';
+import EditArticle from './components/EditArticle';
 
 class App extends Component {
   constructor(props) {
@@ -96,6 +97,8 @@ class App extends Component {
       page = <AddArticle handleSubmit={this.handleSubmit} />
     } else if (button === 'publish') {
       page = <Publish articles={this.state.articles.filter(article => article.status !== 'Published')} />
+    } else if (button === 'readMore') {
+      page = <ReadMore 
     }
 
     return (
