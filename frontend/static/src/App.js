@@ -97,9 +97,7 @@ class App extends Component {
       page = <AddArticle handleSubmit={this.handleSubmit} />
     } else if (button === 'publish') {
       page = <Publish articles={this.state.articles.filter(article => article.status !== 'Published')} />
-    } else if (button === 'readMore') {
-      page = <ReadMore 
-    }
+    } 
 
     return (
       <div className="container-fluid">
