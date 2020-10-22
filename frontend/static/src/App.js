@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Cookies from 'js-cookie';
 import ArticleList from './components/ArticleList';
+import ArticleDetail from './components/ArticleDetail';
 import EntertainmentList from './components/EntertainmentList';
 import TravelList from './components/TravelList';
 import FoodList from './components/FoodList';
@@ -17,6 +18,7 @@ class App extends Component {
 
     this.state = {
       articles: [],
+      article: {},
       button: 'home',
       isLoggedIn: Cookies.get('Authorization')? true:false,
     }
@@ -148,8 +150,8 @@ class App extends Component {
   renderLogin() {
     this.setState({ button: 'login' });
   }
-  readMore() {
-    this.setState({ button: 'readMore' });
+  readMore(article) {
+    this.setState({ button: 'readMore', article });
   }
 
 
@@ -161,11 +163,11 @@ class App extends Component {
     if (button === 'home') {
       page = <ArticleList readMore={this.readMore} articles={this.state.articles.filter(article => article.status === 'PUB')} />
     } else if (button === 'entertainment') {
-      page = <EntertainmentList articles={this.state.articles.filter(article => article.category === 'ET')} />
+      page = <EntertainmentList readMore={this.readMore} articles={this.state.articles.filter(article => article.category === 'ET')} />
     } else if (button === 'travel') {
-      page = <TravelList articles={this.state.articles.filter(article => article.category === 'TR')} />
+      page = <TravelList readMore={this.readMore} articles={this.state.articles.filter(article => article.category === 'TR')} />
     } else if (button === 'food') {
-      page = <FoodList articles={this.state.articles.filter(article => article.category === 'FD')} />
+      page = <FoodList readMore={this.readMore} articles={this.state.articles.filter(article => article.category === 'FD')} />
     } else if (button === 'addArticle') {
       page = <AddArticle handleSubmit={this.handleSubmit} />
     } else if (button === 'publish') {
@@ -174,6 +176,8 @@ class App extends Component {
       page = <Register handleRegistration={this.handleRegistration} />
     } else if (button === 'login') {
       page = <Login handleLogin={this.handleLogin} />
+    } else if (button === 'readMore') {
+      page = <ArticleDetail article={this.state.article} />
     }
 
     return (

@@ -3,13 +3,13 @@ import React from 'react';
 
 function LastWeek(props) {
   return(
-    <button type="button" className="list-group-item list-group-item-action font-weight-bold" onClick={props.readMore}>{props.article.title}</button>
+    <button type="button" className="list-group-item list-group-item-action font-weight-bold" onClick={() => props.readMore(props.article)}>{props.article.title}</button>
   )
 }
 
 function TopStories(props) {
   return(
-    <button type="button" className="list-group-item list-group-item-action" data-toggle="modal" data-target="#staticBackdrop" onClick={props.readMore}>
+    <button type="button" className="list-group-item list-group-item-action" onClick={() => props.readMore(props.article)}>
       <h5 className="card-title font-weight-bold">{props.article.title}</h5>
       <div id="topstory" className="card-body">
         <p>{props.article.body}</p>
