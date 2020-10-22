@@ -104,8 +104,8 @@ class App extends Component {
     console.log(data);
     if(data.key) {
       Cookies.set('Authorization', `Token ${data.key}`);
-      this.renderHome();
       this.setState({isLoggedIn: true});
+      this.renderHome();
     }
   }
 
@@ -123,6 +123,7 @@ class App extends Component {
     if(data.detail === "Successfully logged out."){
       Cookies.remove('Authorization');
       this.setState({isLoggedIn: false});
+      this.renderHome();
     }
   }
 
