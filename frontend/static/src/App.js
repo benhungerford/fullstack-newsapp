@@ -43,9 +43,10 @@ class App extends Component {
 
 
   handleSubmit(event, data) {
+    console.log(data);
     event.preventDefault();
-    const csrftoken = Cookies.get('csfrtoken');
-    fetch('/api/v1/', {
+    const csrftoken = Cookies.get('csrftoken');
+    fetch('/api/v1/articles/', {
       method: 'POST',
       headers: {
         'X-CSRFToken': csrftoken,
@@ -59,6 +60,7 @@ class App extends Component {
       this.setState({ articles })
     })
     .catch(error => console.log('Error:', error));
+    this.renderPublish();
   }
 
   async handleRegistration(event, obj) {
@@ -150,23 +152,24 @@ class App extends Component {
     this.setState({ button: 'readMore' });
   }
 
+
   render() {
     const isLoggedIn = this.state.isLoggedIn;
     const button = this.state.button;
     let page;
 
     if (button === 'home') {
-      page = <ArticleList readMore={this.readMore} articles={this.state.articles.filter(article => article.status === 'Published')} />
+      page = <ArticleList readMore={this.readMore} articles={this.state.articles.filter(article => article.status === 'PUB')} />
     } else if (button === 'entertainment') {
-      page = <EntertainmentList articles={this.state.articles.filter(article => article.category === 'Entertainment')} />
+      page = <EntertainmentList articles={this.state.articles.filter(article => article.category === 'ET')} />
     } else if (button === 'travel') {
-      page = <TravelList articles={this.state.articles.filter(article => article.category === 'Travel')} />
+      page = <TravelList articles={this.state.articles.filter(article => article.category === 'TR')} />
     } else if (button === 'food') {
-      page = <FoodList articles={this.state.articles.filter(article => article.category === 'Food')} />
+      page = <FoodList articles={this.state.articles.filter(article => article.category === 'FD')} />
     } else if (button === 'addArticle') {
       page = <AddArticle handleSubmit={this.handleSubmit} />
     } else if (button === 'publish') {
-      page = <Publish articles={this.state.articles.filter(article => article.status !== 'Published')} />
+      page = <Publish articles={this.state.articles.filter(article => article.status !== 'PUB')} />
     } else if (button === 'register') {
       page = <Register handleRegistration={this.handleRegistration} />
     } else if (button === 'login') {
@@ -200,8 +203,6 @@ class App extends Component {
               <div className="categories">
                 <button type="button" className="btn btn-info ml-2" onClick={this.renderAddArticle}>Add Article</button>
                 <button type="button" className="btn btn-info ml-2" onClick={this.renderPublish}>Publish</button>
-                <button type="button" className="btn btn-info ml-2" onClick={this.renderRegister}>Register</button>
-
                 <button type="button" className="btn btn-danger ml-2" onClick={this.handleLogout}>Logout</button>
               </div>
             </React.Fragment>
