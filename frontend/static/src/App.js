@@ -34,6 +34,8 @@ class App extends Component {
     this.renderLogin = this.renderLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.editArticle = this.editArticle.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   componentDidMount() {
@@ -45,7 +47,6 @@ class App extends Component {
 
 
   handleSubmit(event, data) {
-    console.log(data);
     event.preventDefault();
     const csrftoken = Cookies.get('csrftoken');
     fetch('/api/v1/articles/', {
@@ -63,6 +64,26 @@ class App extends Component {
     })
     .catch(error => console.log('Error:', error));
     this.renderPublish();
+  }
+
+  async handleEdit(event, data) {
+    event.preventDefault();
+    const csrftoken = Cookies.get('csrftoken');
+    fetch(`/api/v1/articles/${data.id}/`, {
+      method: 'PUT',
+      headers: {
+        'X-CSRFToken': csrftoken,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      const articles = [...this.state.articles, data]
+      this.setState({ articles })
+      this.renderPublish();
+    })
+    .catch(error => console.log('Error:', error));
   }
 
   async handleRegistration(event, obj) {
@@ -154,6 +175,9 @@ class App extends Component {
   readMore(article) {
     this.setState({ button: 'readMore', article });
   }
+  editArticle(article) {
+    this.setState({ button: 'editArticle', article })
+  }
 
 
   render() {
@@ -172,13 +196,15 @@ class App extends Component {
     } else if (button === 'addArticle') {
       page = <AddArticle handleSubmit={this.handleSubmit} />
     } else if (button === 'publish') {
-      page = <Publish articles={this.state.articles.filter(article => article.status !== 'PUB')} />
+      page = <Publish handleEdit={this.handleEdit} editArticle={this.editArticle} articles={this.state.articles.filter(article => article.status !== 'PUB')} />
     } else if (button === 'register') {
       page = <Register handleRegistration={this.handleRegistration} />
     } else if (button === 'login') {
       page = <Login handleLogin={this.handleLogin} />
     } else if (button === 'readMore') {
       page = <ArticleDetail article={this.state.article} />
+    } else if (button === 'editArticle') {
+      page = <EditArticle article={this.state.article} handleEdit={this.handleEdit}/>
     }
 
     return (

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 function PublishArticle(props) {
   return(
-    <button type="button" className="list-group-item list-group-item-action" data-toggle="modal" data-target="#staticBackdrop" onClick={props.readMore}>
+    <button type="button" className="list-group-item list-group-item-action" onClick={() => props.editArticle(props.article)}>
       <h5 className="card-title font-weight-bold">{props.article.title}</h5>
       <div id="topstory" className="card-body">
         <p>{props.article.body}</p>
@@ -22,9 +22,9 @@ class Publish extends Component {
   }
 
   render() {
-    const drafts = this.props.articles.filter(article => article.status === 'DFT').map(article => <PublishArticle key={article.id} article={article} />)
-    const submitted = this.props.articles.filter(article => article.status === 'SUB').map(article => <PublishArticle key={article.id} article={article} />)
-    const declined = this.props.articles.filter(article => article.status === 'DEC').map(article => <PublishArticle key={article.id} article={article} />)
+    const drafts = this.props.articles.filter(article => article.status === 'DFT').map(article => <PublishArticle key={article.id} article={article} editArticle={this.props.editArticle} handleEdit={this.props.handleEdit} />)
+    const submitted = this.props.articles.filter(article => article.status === 'SUB').map(article => <PublishArticle key={article.id} article={article} editArticle={this.props.editArticle} handleEdit={this.props.handleEdit} />)
+    const declined = this.props.articles.filter(article => article.status === 'DEC').map(article => <PublishArticle key={article.id} article={article} editArticle={this.props.editArticle} handleEdit={this.props.handleEdit} />)
 
 
     return(
