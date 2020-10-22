@@ -9,7 +9,6 @@ function PublishArticle(props) {
       </div>
     </button>
   )
-
 }
 
 class Publish extends Component {
@@ -50,7 +49,7 @@ class Publish extends Component {
       </div>
     );
   }
-  }
+}
 
 
 

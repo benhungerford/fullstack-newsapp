@@ -105,6 +105,8 @@ class App extends Component {
     if(data.key) {
 
       Cookies.set('Authorization', `Token ${data.key}`);
+      localStorage.setItem('is_staff', data.is_staff)
+      this.renderHome();
     }
   }
 
@@ -126,6 +128,7 @@ class App extends Component {
     if(data.key) {
       Cookies.set('Authorization', `Token ${data.key}`);
       this.setState({isLoggedIn: true});
+      localStorage.setItem('is_staff', data.is_staff)
       this.renderHome();
     }
   }
@@ -144,6 +147,7 @@ class App extends Component {
     if(data.detail === "Successfully logged out."){
       Cookies.remove('Authorization');
       this.setState({isLoggedIn: false});
+      localStorage.removeItem('is_staff', data.is_staff)
       this.renderHome();
     }
   }

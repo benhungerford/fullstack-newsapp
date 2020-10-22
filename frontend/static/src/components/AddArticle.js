@@ -48,7 +48,7 @@ class AddArticle extends Component {
             <option value="SUB">Submit</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        <button type="submit" className="btn btn-primary mt-3">Submit</button>
       </form>
     )
   }

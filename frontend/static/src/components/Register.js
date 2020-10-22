@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Cookies from 'js-cookie';
 
 class Register extends Component {
   constructor(props) {
@@ -20,22 +19,6 @@ class Register extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  async handleLogout(event){
-    console.log('works');
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': Cookies.get('csrftoken'),
-      },
-    };
-    const handleError = (err) => console.warn(err);
-    const responce = await fetch('/api/v1/rest-auth/logout/', options);
-    const data = await responce.json().catch(handleError);
-    if(data.detail === "Successfully logged out."){
-      Cookies.remove('Authorization');
-    }
-  }
 
   render() {
     return(
@@ -59,7 +42,6 @@ class Register extends Component {
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
         <button className="btn btn-primary" onClick={this.props.loginPage}>Login</button>
-        <button className="btn btn-danger" onClick={this.handleLogout}>Logout</button>
       </form>
     )
   }
