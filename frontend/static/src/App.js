@@ -30,6 +30,8 @@ class App extends Component {
     this.readMore = this.readMore.bind(this);
     this.renderRegister = this.renderRegister.bind(this);
     this.renderLogin = this.renderLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   componentDidMount() {
@@ -82,7 +84,7 @@ class App extends Component {
   }
 
   async handleLogin(event, obj) {
-
+    event.preventDefault();
     const options = {
       method: 'POST',
       headers: {
@@ -99,6 +101,7 @@ class App extends Component {
     if(data.key) {
       Cookies.set('Authorization', `Token ${data.key}`);
       this.renderHome();
+      this.setState({isLoggedIn: true});
     }
   }
 
@@ -106,16 +109,16 @@ class App extends Component {
     const options = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         'X-CSRFToken': Cookies.get('csrftoken'),
       },
     };
     const handleError = (err) => console.warn(err);
-    const responce = await fetch('/api/v1/rest-auth/logout/', options);
-    const data = await responce.json().catch(handleError);
+    const response = await fetch('/api/v1/rest-auth/logout/', options);
+    const data = await response.json().catch(handleError);
+    // console.log(data);
     if(data.detail === "Successfully logged out."){
       Cookies.remove('Authorization');
-      this.renderHome();
+      this.setState({isLoggedIn: false});
     }
   }
 
@@ -174,7 +177,7 @@ class App extends Component {
 
         <div className="container-fluid">
           <nav className="navbar navbar-light bg-light">
-          {isLoggedIn === false ?
+          {!isLoggedIn ?
             <React.Fragment>
               <div>
                 <button className="navbar-brand btn btn-dark text-white" onClick={this.renderHome}>Home</button>
@@ -198,6 +201,7 @@ class App extends Component {
                 <button type="button" className="btn btn-info ml-2" onClick={this.renderAddArticle}>Add Article</button>
                 <button type="button" className="btn btn-info ml-2" onClick={this.renderPublish}>Publish</button>
                 <button type="button" className="btn btn-info ml-2" onClick={this.renderRegister}>Register</button>
+
                 <button type="button" className="btn btn-danger ml-2" onClick={this.handleLogout}>Logout</button>
               </div>
             </React.Fragment>
