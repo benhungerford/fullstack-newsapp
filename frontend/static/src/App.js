@@ -8,6 +8,7 @@ import FoodList from './components/FoodList';
 import AddArticle from './components/AddArticle';
 import Publish from './components/Publish';
 import Register from './components/Register';
+import Login from './components/Login';
 import EditArticle from './components/EditArticle';
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
     this.state = {
       articles: [],
       button: 'home',
+      isLoggedIn: Cookies.get('Authorization')? true:false,
     }
     this.renderHome = this.renderHome.bind(this);
     this.renderEntertainment = this.renderEntertainment.bind(this);
@@ -27,6 +29,7 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.readMore = this.readMore.bind(this);
     this.renderRegister = this.renderRegister.bind(this);
+    this.renderLogin = this.renderLogin.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +38,7 @@ class App extends Component {
       .then(data => this.setState({ articles: data }))
       .catch(error => console.log('Error:', error));
   }
+
 
   handleSubmit(event, data) {
     event.preventDefault();
@@ -77,6 +81,44 @@ class App extends Component {
     }
   }
 
+  async handleLogin(event, obj) {
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': Cookies.get('csrftoken'),
+      },
+      body: JSON.stringify(obj),
+    };
+
+    const handleError = (err) => console.warn(err);
+    const response = await fetch('/api/v1/rest-auth/login/', options).catch(handleError);
+    const data = await response.json().catch(handleError);
+    console.log(data);
+    if(data.key) {
+      Cookies.set('Authorization', `Token ${data.key}`);
+      this.renderHome();
+    }
+  }
+
+  async handleLogout(event){
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': Cookies.get('csrftoken'),
+      },
+    };
+    const handleError = (err) => console.warn(err);
+    const responce = await fetch('/api/v1/rest-auth/logout/', options);
+    const data = await responce.json().catch(handleError);
+    if(data.detail === "Successfully logged out."){
+      Cookies.remove('Authorization');
+      this.renderHome();
+    }
+  }
+
   renderHome() {
     this.setState({ button: 'home' });
   }
@@ -98,11 +140,15 @@ class App extends Component {
   renderRegister() {
     this.setState({ button: 'register' });
   }
+  renderLogin() {
+    this.setState({ button: 'login' });
+  }
   readMore() {
     this.setState({ button: 'readMore' });
   }
 
   render() {
+    const isLoggedIn = this.state.isLoggedIn;
     const button = this.state.button;
     let page;
 
@@ -119,26 +165,47 @@ class App extends Component {
     } else if (button === 'publish') {
       page = <Publish articles={this.state.articles.filter(article => article.status !== 'Published')} />
     } else if (button === 'register') {
-      page = <Register handleRegistration={this.handleRegistration} loginPage={this.loginPage} />
+      page = <Register handleRegistration={this.handleRegistration} />
+    } else if (button === 'login') {
+      page = <Login handleLogin={this.handleLogin} />
     }
 
     return (
-      <div className="container-fluid">
-        <nav className="navbar navbar-light bg-light">
-          <button className="navbar-brand btn btn-light" onClick={this.renderHome}>
-            <i className="fas fa-newspaper"></i>
-          </button>
-          <button type="button" className="btn btn-light" onClick={this.renderEntertainment}>Entertainment</button>
-          <button type="button" className="btn btn-light ml-2" onClick={this.renderTravel}>Travel</button>
-          <button type="button" className="btn btn-light ml-2" onClick={this.renderFood}>Food</button>
-          <div className="categories">
-            <button type="button" className="btn btn-info ml-2" onClick={this.renderAddArticle}>Add Article</button>
-            <button type="button" className="btn btn-info ml-2" onClick={this.renderPublish}>Publish</button>
-            <button type="button" className="btn btn-info ml-2" onClick={this.renderRegister}>Register</button>
-          </div>
-        </nav>
-        {page}
-      </div>
+
+        <div className="container-fluid">
+          <nav className="navbar navbar-light bg-light">
+          {isLoggedIn === false ?
+            <React.Fragment>
+              <div>
+                <button className="navbar-brand btn btn-dark text-white" onClick={this.renderHome}>Home</button>
+                <button type="button" className="btn btn-light" onClick={this.renderEntertainment}>Entertainment</button>
+                <button type="button" className="btn btn-light ml-2" onClick={this.renderTravel}>Travel</button>
+                <button type="button" className="btn btn-light ml-2" onClick={this.renderFood}>Food</button>
+              </div>
+              <div className="categories">
+                <button type="button" className="btn btn-info ml-2" onClick={this.renderRegister}>Register</button>
+                <button type="button" className="btn btn-info ml-2" onClick={this.renderLogin}>Login</button>
+              </div>
+            </React.Fragment>
+          : <React.Fragment>
+              <div>
+                <button className="navbar-brand btn btn-dark text-white" onClick={this.renderHome}>Home</button>
+                <button type="button" className="btn btn-light" onClick={this.renderEntertainment}>Entertainment</button>
+                <button type="button" className="btn btn-light ml-2" onClick={this.renderTravel}>Travel</button>
+                <button type="button" className="btn btn-light ml-2" onClick={this.renderFood}>Food</button>
+              </div>
+              <div className="categories">
+                <button type="button" className="btn btn-info ml-2" onClick={this.renderAddArticle}>Add Article</button>
+                <button type="button" className="btn btn-info ml-2" onClick={this.renderPublish}>Publish</button>
+                <button type="button" className="btn btn-info ml-2" onClick={this.renderRegister}>Register</button>
+                <button type="button" className="btn btn-danger ml-2" onClick={this.handleLogout}>Logout</button>
+              </div>
+            </React.Fragment>
+          }
+          </nav>
+          {page}
+        </div>
+
     );
   }
 }
