@@ -12,7 +12,6 @@ class Register extends Component {
     }
 
     this.handleInput = this.handleInput.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleInput(event) {
@@ -40,8 +39,7 @@ class Register extends Component {
           <label htmlFor="InputPassword2">Re-type password</label>
           <input type="password" className="form-control" id="InputPassword2" name="password2" value={this.state.password2} onChange={this.handleInput} />
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
-        <button className="btn btn-primary" onClick={this.props.loginPage}>Login</button>
+        <button type="submit" className="btn btn-primary">Register</button>
       </form>
     )
   }

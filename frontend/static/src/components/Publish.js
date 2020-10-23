@@ -17,13 +17,28 @@ class Publish extends Component {
 
     this.state = {
       button: 'default',
+      articles: [],
+    }
+  }
+
+  componentDidMount() {
+    if(localStorage.is_staff === 'true') {
+      fetch('api/v1/articles/superuser-view/')
+        .then(response => response.json())
+        .then(data => this.setState({ articles: data }))
+        .catch(error => console.log('Error:', error));
+    }else {
+      fetch('api/v1/articles/user-view/')
+        .then(response => response.json())
+        .then(data => this.setState({ articles: data }))
+        .catch(error => console.log('Error:', error));
     }
   }
 
   render() {
-    const drafts = this.props.articles.filter(article => article.status === 'DFT').map(article => <PublishArticle key={article.id} article={article} editArticle={this.props.editArticle} handleEdit={this.props.handleEdit} />)
-    const submitted = this.props.articles.filter(article => article.status === 'SUB').map(article => <PublishArticle key={article.id} article={article} editArticle={this.props.editArticle} handleEdit={this.props.handleEdit} />)
-    const declined = this.props.articles.filter(article => article.status === 'DEC').map(article => <PublishArticle key={article.id} article={article} editArticle={this.props.editArticle} handleEdit={this.props.handleEdit} />)
+    const drafts = this.state.articles.filter(article => article.status === 'DFT').map(article => <PublishArticle key={article.id} article={article} editArticle={this.props.editArticle} handleEdit={this.props.handleEdit} />)
+    const submitted = this.state.articles.filter(article => article.status === 'SUB').map(article => <PublishArticle key={article.id} article={article} editArticle={this.props.editArticle} handleEdit={this.props.handleEdit} />)
+    const declined = this.state.articles.filter(article => article.status === 'DEC').map(article => <PublishArticle key={article.id} article={article} editArticle={this.props.editArticle} handleEdit={this.props.handleEdit} />)
 
 
     return(

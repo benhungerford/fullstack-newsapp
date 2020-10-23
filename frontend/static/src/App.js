@@ -128,7 +128,7 @@ class App extends Component {
     if(data.key) {
       Cookies.set('Authorization', `Token ${data.key}`);
       this.setState({isLoggedIn: true});
-      localStorage.setItem('is_staff', data.is_staff)
+      localStorage.setItem('is_staff', data.is_staff);
       this.renderHome();
     }
   }

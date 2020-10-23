@@ -42,11 +42,22 @@ class AddArticle extends Component {
             <option value="FD">Food</option>
           </select>
           <label htmlFor="status" className="font-weight-bold">Status</label>
-          <select className="form-control" id="status" name="status" onChange={this.handleInput}>
-            <option>Select Status</option>
-            <option value="DFT">Draft</option>
-            <option value="SUB">Submit</option>
-          </select>
+          {localStorage.is_staff === 'true' ?
+            <React.Fragment>
+              <select className="form-control" id="status" name="status" onChange={this.handleInput}>
+                <option>Select Status</option>
+                <option value="DFT">Draft</option>
+                <option value="SUB">Submit</option>
+                <option value="PUB">Publish</option>
+              </select>
+            </React.Fragment>
+          : <React.Fragment>
+              <select className="form-control" id="status" name="status" onChange={this.handleInput}>
+                <option>Select Status</option>
+                <option value="DFT">Draft</option>
+                <option value="SUB">Submit</option>
+              </select>
+            </React.Fragment>}
         </div>
         <button type="submit" className="btn btn-primary mt-3">Submit</button>
       </form>
