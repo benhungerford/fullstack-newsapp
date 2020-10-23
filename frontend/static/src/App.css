@@ -4,3 +4,12 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.article-image {
+  max-width: 100%;
+}
+
+.article-title {
+  margin: 3% 13%;
+  text-align: center;
+}
