@@ -244,6 +244,7 @@ class App extends Component {
           }
           </nav>
           {page}
+          <footer className="bg-light d-flex justify-content-md-center align-items-center mt-5"><i className="far fa-copyright mr-1"></i>Ben Hungerford</footer>
         </div>
 
     );
