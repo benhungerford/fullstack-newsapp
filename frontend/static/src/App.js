@@ -178,6 +178,9 @@ class App extends Component {
   }
   readMore(article) {
     this.setState({ button: 'readMore', article });
+    window.scrollTo({
+      top: 0,
+    });
   }
   editArticle(article) {
     this.setState({ button: 'editArticle', article })
@@ -214,7 +217,7 @@ class App extends Component {
     return (
 
         <div className="container-fluid">
-          <nav className="navbar navbar-light bg-light">
+          <nav className="navbar sticky-top navbar-light bg-light">
           {!isLoggedIn ?
             <React.Fragment>
               <div>
