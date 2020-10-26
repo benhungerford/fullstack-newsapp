@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import dj_database_url
 
 from pathlib import Path
 
@@ -27,7 +28,10 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'serene-beach-86186.herokuapp.com',  # add your Heroku domain here
+]
 
 
 # Application definition
@@ -163,11 +167,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend/static/build/static'),)
 REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend/static')
 
-# REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend/static')
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend/static/build/static'), )
-#
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend/static')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend/static/build/static'), )
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 REST_AUTH_SERIALIZERS = {
     'TOKEN_SERIALIZER': 'accounts.serializers.TokenSerializer',
