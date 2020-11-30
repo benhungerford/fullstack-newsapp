@@ -24,7 +24,7 @@ class AddArticle extends Component {
 
   render() {
     return(
-      <form className="mt-3 mr-5 ml-5" onSubmit={(event) => this.props.handleSubmit(event, this.state)}>
+      <form className="mt-3 mr-md-5 ml-md-5" onSubmit={(event) => this.props.handleSubmit(event, this.state)}>
         <div className="form-group">
           <label htmlFor="title" className="font-weight-bold">Article Title</label>
           <input className="form-control mb-3" type="text" id="title" placeholder="Article Title" name="title" onChange={this.handleInput}/>
@@ -32,7 +32,7 @@ class AddArticle extends Component {
           <textarea className="form-control mb-3" rows="10" id="body" placeholder="Article Body" name="body" onChange={this.handleInput}></textarea>
           <span className="form-group form-check">
             <input type="checkbox" className="form-check-input" id="exampleCheck1" onChange={this.toggleTopStory}/>
-            <label className="form-check-label font-weight-bold font-italic" for="exampleCheck1">Make Top Story</label>
+            <label className="form-check-label font-weight-bold font-italic" htmlFor="exampleCheck1">Make Top Story</label>
           </span>
           <label htmlFor="category" className="font-weight-bold">Category</label>
           <select className="form-control" id="category" name="category" onChange={this.handleInput}>

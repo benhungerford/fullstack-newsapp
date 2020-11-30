@@ -220,28 +220,38 @@ class App extends Component {
           <nav className="navbar sticky-top navbar-light bg-light">
           {!isLoggedIn ?
             <React.Fragment>
-              <div>
-                <button className="navbar-brand btn btn-dark text-white" onClick={this.renderHome}>Home</button>
-                <button type="button" className="btn btn-light" onClick={this.renderEntertainment}>Entertainment</button>
-                <button type="button" className="btn btn-light ml-2" onClick={this.renderTravel}>Travel</button>
-                <button type="button" className="btn btn-light ml-2" onClick={this.renderFood}>Food</button>
-              </div>
-              <div className="categories">
-                <button type="button" className="btn btn-info ml-2" onClick={this.renderRegister}>Register</button>
-                <button type="button" className="btn btn-info ml-2" onClick={this.renderLogin}>Login</button>
+              <div className="row">
+                <div className="dropdown">
+                  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    News App
+                  </button>
+                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <button className="dropdown-item btn btn-dark" onClick={this.renderHome}>Home</button>
+                    <button type="button" className="dropdown-item btn btn-light" onClick={this.renderEntertainment}>Entertainment</button>
+                    <button type="button" className="dropdown-item btn btn-light" onClick={this.renderTravel}>Travel</button>
+                    <button type="button" className="dropdown-item btn btn-light" onClick={this.renderFood}>Food</button>
+                    <button type="button" className="dropdown-item btn btn-info" onClick={this.renderRegister}>Register</button>
+                    <button type="button" className="dropdown-item btn btn-info" onClick={this.renderLogin}>Login</button>
+                  </div>
+                </div>
               </div>
             </React.Fragment>
           : <React.Fragment>
-              <div>
-                <button className="navbar-brand btn btn-dark text-white" onClick={this.renderHome}>Home</button>
-                <button type="button" className="btn btn-light" onClick={this.renderEntertainment}>Entertainment</button>
-                <button type="button" className="btn btn-light ml-2" onClick={this.renderTravel}>Travel</button>
-                <button type="button" className="btn btn-light ml-2" onClick={this.renderFood}>Food</button>
-              </div>
-              <div className="categories">
-                <button type="button" className="btn btn-info ml-2" onClick={this.renderAddArticle}>Add Article</button>
-                <button type="button" className="btn btn-info ml-2" onClick={this.renderPublish}>Publish</button>
-                <button type="button" className="btn btn-danger ml-2" onClick={this.handleLogout}>Logout</button>
+              <div className="row">
+                <div className="dropdown">
+                  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    News App
+                  </button>
+                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <button className="dropdown-item btn btn-dark" onClick={this.renderHome}>Home</button>
+                    <button type="button" className="dropdown-item btn btn-light" onClick={this.renderEntertainment}>Entertainment</button>
+                    <button type="button" className="dropdown-item btn btn-light" onClick={this.renderTravel}>Travel</button>
+                    <button type="button" className="dropdown-item btn btn-light" onClick={this.renderFood}>Food</button>
+                    <button type="button" className="dropdown-item btn btn-info" onClick={this.renderAddArticle}>Add Article</button>
+                    <button type="button" className="dropdown-item btn btn-info" onClick={this.renderPublish}>Publish</button>
+                    <button type="button" className="dropdown-item btn btn-danger" onClick={this.handleLogout}>Logout</button>
+                  </div>
+                </div>
               </div>
             </React.Fragment>
           }

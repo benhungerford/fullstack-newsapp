@@ -3,8 +3,8 @@ import React from 'react';
 
 function ArticleDetail(props) {
   return(
-    <div className="row row mt-3 mr-5 ml-5 no-gutters d-flex justify-content-around">
-      <div className="card col-8">
+    <div className="row row mt-3 mr-md-5 ml-md-5 no-gutters d-flex justify-content-around">
+      <div className="card col-md-8 col-12">
         <div className="card-body">
           <div>
             <img className="article-image" src={props.article.image} alt="Article" />

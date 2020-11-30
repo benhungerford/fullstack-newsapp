@@ -42,20 +42,20 @@ class Publish extends Component {
 
 
     return(
-      <div className="row mt-3 mr-5 ml-5 no-gutters d-flex justify-content-around">
-        <div className="col-3">
+      <div className="row mt-3 mr-md-5 ml-md-5 no-gutters d-flex justify-content-around">
+        <div className="col-md-3 col-12">
           <h3 className="card-header">Drafts</h3>
           <div className="list-group">
           {drafts}
           </div>
         </div>
-        <div className="col-3">
+        <div className="col-md-3 col-12">
           <h3 className="card-header">Submitted</h3>
           <div className="list-group">
           {submitted}
           </div>
         </div>
-        <div className="col-3">
+        <div className="col-md-3 col-12">
           <h3 className="card-header">Declined</h3>
           <div className="list-group">
           {declined}

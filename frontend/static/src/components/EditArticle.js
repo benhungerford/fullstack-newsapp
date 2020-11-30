@@ -28,7 +28,7 @@ class EditArticle extends Component {
 
   render() {
     return(
-      <form className="mt-3 mr-5 ml-5" onSubmit={(event) => this.props.handleEdit(event, this.state)}>
+      <form className="mt-3 mr-md-5 ml-md-5" onSubmit={(event) => this.props.handleEdit(event, this.state)}>
         <div className="form-group">
           <label htmlFor="title" className="font-weight-bold">Article Title</label>
           <input className="form-control mb-3" type="text" id="title" placeholder="Article Title" name="title" value={this.state.title} onChange={this.handleInput}/>

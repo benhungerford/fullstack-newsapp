@@ -24,14 +24,14 @@ function TravelList(props) {
   const topStories = props.articles.filter(article => article.top_story).map(article => <TopStories key={article.id} article={article} readMore={props.readMore} />);
   const lastWeek = props.articles.filter(article => !article.top_story).map(article => <LastWeek key={article.id} article={article} readMore={props.readMore} />);
   return(
-    <div className="row mt-3 mr-5 ml-5 no-gutters d-flex justify-content-around">
-      <div className="col-7">
+    <div className="row mt-3 mr-md-5 ml-md-5 no-gutters d-flex justify-content-around">
+      <div className="col-md-7 col-12">
         <h3 className="card-header">Top Stories</h3>
         <div className="list-group">
         {topStories}
         </div>
       </div>
-      <div className="col-3">
+      <div className="col-md-3 col-12">
         <h3 className="card-header">This Week</h3>
         {lastWeek}
       </div>
